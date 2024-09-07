@@ -1,0 +1,83 @@
+package net.javaguides.swing;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import java.awt.Toolkit;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.SystemColor;
+import javax.swing.ImageIcon;
+import java.awt.Color;
+import java.awt.Font;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+
+public class userinterface extends JFrame {
+
+	private JPanel contentPane;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					userinterface frame = new userinterface();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public userinterface() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Deekey\\Downloads\\Java Project\\aboulogoimage-0.png"));
+		setTitle("Faculty Interface(PMS)");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		contentPane = new JPanel();
+		contentPane.setBackground(SystemColor.inactiveCaption);
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JButton btnLogin = new JButton("Login ");
+		btnLogin.setForeground(Color.RED);
+		btnLogin.setIcon(null);
+		btnLogin.setBackground(SystemColor.activeCaption);
+		btnLogin.setBounds(267, 43, 135, 36);
+		contentPane.add(btnLogin);
+		
+		JButton btnNewButton = new JButton("CREATE ACCOUNT");
+		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		btnNewButton.setBackground(new Color(0, 204, 255));
+		btnNewButton.setForeground(new Color(0, 0, 139));
+		btnNewButton.setBounds(267, 106, 135, 36);
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		contentPane.add(btnNewButton);
+		
+		JButton btnGoBack = new JButton("GO BACK");
+		btnGoBack.setForeground(new Color(0, 0, 139));
+		btnGoBack.setBounds(267, 171, 135, 36);
+		contentPane.add(btnGoBack);
+		
+		JLabel lblNewLabel = new JLabel("FACULTY ");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\Deekey\\Downloads\\Java Project\\fac_icon.png"));
+		lblNewLabel.setBounds(27, 22, 205, 204);
+		contentPane.add(lblNewLabel);
+	}
+}

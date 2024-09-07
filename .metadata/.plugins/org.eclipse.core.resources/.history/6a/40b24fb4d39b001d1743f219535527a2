@@ -1,0 +1,457 @@
+package net.javaguides.swing;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
+import com.mysql.cj.jdbc.result.ResultSetMetaData;
+import com.mysql.cj.xdevapi.Statement;
+
+import java.awt.SystemColor;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.ImageIcon;
+import java.awt.Toolkit;
+import javax.swing.JButton;
+import java.awt.Font;
+import java.awt.Color;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JTable;
+import javax.swing.JScrollPane;
+import javax.swing.JPasswordField;
+
+public class Deliveryboy extends JFrame {
+private TableModel models;
+	private JPanel contentPane;
+	private JPanel panel_1;
+	private JTextField txtUserName;
+	private JTextField txtPassword;
+	private Statement statement;
+	private Statement statements;
+	private JTable table;
+private DefaultTableModel model;
+	private JPanel outputArea;
+	private Statement st;
+	private Statement stq;
+	private String name="";
+	private static java.sql.Connection con;
+	private int width;
+	private JPanel panel;
+	private String runout="";
+	private String idpr="";
+	private String uname="";
+	private String dep_id="";
+	private String Name="";
+	private String Dep_Id="";
+	private String Doc_Type="";
+	private String Side="";
+	private String PgSize="";
+	private String color="";
+	private String pages="";
+	private String ffile="";
+	private String m="";
+	private String formatdate="";
+	private String formattime="";
+	private int id=0;
+	private JTextField textField;
+	private JTextField textField_1;
+	private JTextField textField_2;
+	private JTextField textField_3;
+	private JTextField textField_4;
+	private JTextField textField_5;
+	private JTextField textField_6;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Deliveryboy frame = new Deliveryboy();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public Deliveryboy() {
+		setBackground(new Color(75, 0, 130));
+		setResizable(false);
+		setTitle("PMS (Delivery Window)");
+		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Deekey\\Downloads\\Java Project\\aboulogoimage-0.png"));
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setBounds(100, 100, 1020, 690);
+		contentPane = new JPanel();
+		contentPane.setBackground(new Color(75, 0, 130));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		panel_1 = new JPanel();
+		panel_1.setBackground(new Color(75, 0, 130));
+		panel_1.setBounds(10, 10, 988, 633);
+		contentPane.add(panel_1);
+		panel_1.setLayout(null);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(53, 82, 866, 258);
+		panel_1.add(scrollPane);
+		
+		
+		
+		JButton btnNewButton_1 = new JButton("Display Data");
+		btnNewButton_1.setForeground(new Color(75, 0, 130));
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				table.setModel(new DefaultTableModel());
+				try {
+					
+					Connection con =  DriverManager.getConnection("jdbc:mysql://localhost:3306/swing_demo",
+	                        "root", "12345");
+					PreparedStatement st = con.prepareStatement("select * from approve_print_request");
+					
+					ResultSet rs=st.executeQuery();
+					ResultSetMetaData rsmd=(ResultSetMetaData) rs.getMetaData();
+					DefaultTableModel model=(DefaultTableModel) table.getModel();
+					
+					int cols=rsmd.getColumnCount();
+					String[] colName= new String[cols];
+					for(int i=0;i<cols;i++)
+						colName[i]=rsmd.getColumnName(i+1);
+					model.setColumnIdentifiers(colName);
+					 
+					String name,dep_id,doc_type,page_side,page_side1,page_color,number_of_pages,file,print_cost,print_date,print_time;
+					while(rs.next()) {
+						id=rs.getInt(1);
+						name=rs.getString(2);
+						dep_id=rs.getString(3);
+						doc_type=rs.getString(4);
+						page_side=rs.getString(5);
+						page_side1=rs.getString(6);
+						page_color=rs.getString(7);
+						number_of_pages=rs.getString(8);
+						file=rs.getString(9);
+						print_cost=rs.getString(10);
+						print_date=rs.getString(11);
+						print_time=rs.getString(12);
+						String s=String.valueOf(id);
+						
+						String[] row= {s,name,dep_id,doc_type,page_side,page_side1,page_color,number_of_pages,file,print_cost,print_date,print_time};
+						model.addRow(row);
+						
+						
+					}
+					
+//					((Connection) st).close();
+//					con.close();
+					table.setModel(model);
+					
+					
+					
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+			}
+		});
+		//		table.addMouseListener(new MouseAdapter() {
+		//			@Override
+		//			public void mouseClicked(MouseEvent e) {
+		//				int i=table.getSelectedRow();
+		//				models =table.getModel();
+		//				idpr=model.getValueAt(i,0).toString();
+		//				 Name=model.getValueAt(i,1).toString();
+		//				 Dep_Id=model.getValueAt(i,2).toString();
+		//				 Doc_Type=model.getValueAt(i,3).toString();
+		//				 Side=model.getValueAt(i,4).toString();
+		//				 PgSize=model.getValueAt(i,5).toString();
+		//				 color=model.getValueAt(i,6).toString();
+		//				 pages=model.getValueAt(i,7).toString();
+		//				 ffile=model.getValueAt(i,8).toString();
+		//				 m=model.getValueAt(i,9).toString();
+		//				 formatdate=model.getValueAt(i,10).toString();
+		//				 formattime=model.getValueAt(i,11).toString();
+		//				
+		//				
+		//			}
+		//		});
+				table = new JTable();
+				scrollPane.setViewportView(table);
+				
+				
+		
+		btnNewButton_1.setBackground(new Color(255, 250, 250));
+		btnNewButton_1.setBounds(53, 30, 137, 42);
+		panel_1.add(btnNewButton_1);
+		
+		JButton btnNewButton_1_1 = new JButton("Clear Data");
+		btnNewButton_1_1.setForeground(new Color(75, 0, 130));
+		btnNewButton_1_1.setBackground(new Color(255, 250, 250));
+		btnNewButton_1_1.setBounds(208, 30, 137, 42);
+		panel_1.add(btnNewButton_1_1);
+		
+		JButton btnNewButton_1_1_1 = new JButton("Mark For Delivery");
+		btnNewButton_1_1_1.setForeground(new Color(75, 0, 130));
+		btnNewButton_1_1_1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnNewButton_1_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.print(name);
+			}
+		});
+		btnNewButton_1_1_1.setBackground(new Color(255, 255, 0));
+		btnNewButton_1_1_1.setBounds(321, 569, 170, 42);
+		panel_1.add(btnNewButton_1_1_1);
+		
+		JLabel dname = new JLabel("Name");
+		dname.setForeground(new Color(255, 255, 0));
+		dname.setFont(new Font("Tahoma", Font.BOLD, 16));
+		dname.setBounds(54, 366, 91, 27);
+		panel_1.add(dname);
+		
+		JLabel ddid = new JLabel("Department ID");
+		ddid.setForeground(new Color(255, 255, 0));
+		ddid.setFont(new Font("Tahoma", Font.BOLD, 16));
+		ddid.setBounds(53, 420, 126, 27);
+		panel_1.add(ddid);
+		
+		JLabel dph = new JLabel("Phone Number");
+		dph.setForeground(new Color(255, 255, 0));
+		dph.setFont(new Font("Tahoma", Font.BOLD, 16));
+		dph.setBounds(321, 366, 126, 27);
+		panel_1.add(dph);
+		
+		JLabel droom = new JLabel("Room Number");
+		droom.setForeground(new Color(255, 255, 0));
+		droom.setFont(new Font("Tahoma", Font.BOLD, 16));
+		droom.setBounds(321, 420, 126, 27);
+		panel_1.add(droom);
+		
+		textField = new JTextField();
+		textField.setBounds(112, 366, 172, 19);
+		panel_1.add(textField);
+		textField.setColumns(10);
+		
+		textField_1 = new JTextField();
+		textField_1.setColumns(10);
+		textField_1.setBounds(187, 424, 111, 19);
+		panel_1.add(textField_1);
+		
+		textField_2 = new JTextField();
+		textField_2.setColumns(10);
+		textField_2.setBounds(457, 366, 172, 19);
+		panel_1.add(textField_2);
+		
+		textField_3 = new JTextField();
+		textField_3.setColumns(10);
+		textField_3.setBounds(457, 426, 111, 19);
+		panel_1.add(textField_3);
+		
+		JLabel lblPrinterId = new JLabel("Printer ID");
+		lblPrinterId.setForeground(new Color(255, 255, 0));
+		lblPrinterId.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblPrinterId.setBounds(651, 366, 81, 27);
+		panel_1.add(lblPrinterId);
+		
+		JLabel lblDocumentName = new JLabel("Document Name");
+		lblDocumentName.setForeground(new Color(255, 255, 0));
+		lblDocumentName.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblDocumentName.setBounds(595, 420, 137, 27);
+		panel_1.add(lblDocumentName);
+		
+		textField_4 = new JTextField();
+		textField_4.setColumns(10);
+		textField_4.setBounds(742, 366, 177, 19);
+		panel_1.add(textField_4);
+		
+		textField_5 = new JTextField();
+		textField_5.setColumns(10);
+		textField_5.setBounds(742, 420, 177, 19);
+		panel_1.add(textField_5);
+		
+		textField_6 = new JTextField();
+		textField_6.setHorizontalAlignment(SwingConstants.CENTER);
+		textField_6.setBounds(53, 481, 244, 130);
+		panel_1.add(textField_6);
+		textField_6.setColumns(10);
+		
+		
+		
+		panel = new JPanel();
+		panel.setBackground(new Color(75, 0, 130));
+		panel.setBounds(10, 10, 988, 633);
+		contentPane.add(panel);
+		panel.setLayout(null);
+		panel.setFocusable(true);
+		
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			}
+		});
+		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\Deekey\\Downloads\\Java Project\\delicon.png"));
+		lblNewLabel.setBounds(109, 142, 309, 349);
+		panel.add(lblNewLabel);
+		
+	
+		
+		txtUserName = new JTextField();
+		txtUserName.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				if(txtUserName.getText().equals("User Name")) {
+					txtUserName.setText("");
+					
+					
+				}
+				txtUserName.setBackground(Color.yellow);
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(txtUserName.getText().equals("")) {
+					txtUserName.setText("User Name");
+					
+				}
+				txtUserName.setBackground(Color.white);
+				
+			}
+		});
+		txtUserName.setForeground(UIManager.getColor("Button.disabledForeground"));
+		txtUserName.setHorizontalAlignment(SwingConstants.CENTER);
+		txtUserName.setFont(new Font("Tahoma", Font.BOLD, 14));
+		txtUserName.setText("User Name");
+		txtUserName.setBounds(553, 199, 222, 38);
+		panel.add(txtUserName);
+		txtUserName.setColumns(10);
+		
+		txtPassword = new JTextField();
+		
+		txtPassword.setText("Password");
+		txtPassword.setHorizontalAlignment(SwingConstants.CENTER);
+		txtPassword.setForeground(SystemColor.textInactiveText);
+		txtPassword.setFont(new Font("Tahoma", Font.BOLD, 14));
+		txtPassword.setColumns(10);
+		txtPassword.setBounds(553, 278, 222, 38);
+		txtPassword.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				if(txtPassword.getText().equals("Password")) {
+					txtPassword.setText("");
+				}
+				txtPassword.setBackground(Color.yellow);
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(txtPassword.getText().equals("")) {
+					txtPassword.setText("Password");
+				}
+				txtPassword.setBackground(Color.white);
+			}
+		});
+		panel.add(txtPassword);
+		
+		JButton btnNewButton = new JButton("Login");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				  String userName = txtUserName.getText();
+	                String password = txtPassword.getText();
+	                try {
+	                    Connection connection = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/swing_demo",
+	                        "root", "12345");
+
+	                    PreparedStatement st = (PreparedStatement) connection
+	                        .prepareStatement("Select name,password from fac_ac where name=? and password=?");
+
+	                    st.setString(1, userName);
+	                    st.setString(2, password);
+	                    ResultSet rs = st.executeQuery();
+	        
+	                    if (rs.next()) {
+	                        
+	                        panel_1.setVisible(true);
+	        				panel.setVisible(false);
+	                       
+	                        
+	                        JOptionPane.showMessageDialog(btnNewButton, "You have successfully logged in");
+	                        
+	                    } else {
+	                        JOptionPane.showMessageDialog(btnNewButton, "Wrong Username & Password");
+	                    }
+	                } catch (SQLException sqlException) {
+	                    sqlException.printStackTrace();
+	                }
+				
+			}
+		});
+		btnNewButton.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				btnNewButton.setBackground(Color.blue);
+				btnNewButton.setForeground(Color.yellow);
+			}
+			
+			@Override
+			public void focusLost(FocusEvent e) {
+				btnNewButton.setBackground(Color.yellow);
+				btnNewButton.setForeground(Color.blue);
+			}
+		});
+		btnNewButton.setForeground(new Color(0, 0, 255));
+		btnNewButton.setBackground(new Color(255, 255, 0));
+		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnNewButton.setBounds(553, 376, 222, 46);
+		panel.add(btnNewButton);
+		panel_1.setVisible(false);
+		JButton btnlogout = new JButton("Logout");
+		btnlogout.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+		                int a = JOptionPane.showConfirmDialog(btnlogout, "Are you sure?");
+		                // JOptionPane.setRootFrame(null);
+		                if (a == JOptionPane.YES_OPTION) {
+		             
+		                	dispose();
+		                	Deliveryboy frame = new Deliveryboy();
+		                    frame.setVisible(true);
+		                    
+		                }
+		                
+		                
+
+		                panel_1.setVisible(true);
+
+		            }
+		    
+			
+		});
+		btnlogout.setBounds(834, 30, 85, 21);
+		panel_1.add(btnlogout);
+		
+	}
+}

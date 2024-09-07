@@ -1,0 +1,65 @@
+package net.javaguides.swing;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import java.awt.Toolkit;
+
+public class Admin_mainpage extends JFrame {
+
+	private JPanel contentPane;
+	private JTable table;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Admin_mainpage frame = new Admin_mainpage();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public Admin_mainpage() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Deekey\\Downloads\\Java Project\\Admin logopng.png"));
+		setTitle("Admin main page ");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 640, 480);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		table = new JTable();
+		table.setBounds(59, 59, 507, 96);
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+				{"Name", "Document_type", "Color", "Pages", ""},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+			},
+			new String[] {
+				"New column", "New column", "New column", "New column", "New column"
+			}
+		));
+		contentPane.add(table);
+	}
+
+}

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename module &apos;Javauserinput.java&apos; in &apos;Javauserinput.java&apos; to &apos;Userregistration.java&apos;&#x0D;&#x0A;- Original project: &apos;Javauserinput.java&apos;&#x0D;&#x0A;- Original element: &apos;Javauserinput.java&apos;&#x0D;&#x0A;- Renamed element: &apos;&apos;&#x0D;&#x0A;- Update references to refactored element" description="Rename module &apos;Javauserinput.java&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.module" input="/src&lt;{module-info.java`Javauserinput.java" name="Userregistration.java" references="true" stamp="1674102714849" version="1.0"/>
+</session>
